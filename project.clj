@@ -5,4 +5,5 @@
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [clj-http "0.6.3"]
-                 [org.clojure/data.xml "0.0.6"]])
+                 [org.clojure/data.xml "0.0.6"]
+                 [clj-time "0.4.4"]])

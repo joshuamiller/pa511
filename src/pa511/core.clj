@@ -1,6 +1,7 @@
 (ns pa511.core
   (:require [clj-http.client :as client]
-            [clojure.data.xml :as xml]))
+            [clojure.data.xml :as xml]
+            [clj-time.format :as time]))
 
 (defrecord Event [class type updated description location event-id create-time])
 
@@ -14,17 +15,20 @@
   [node tag]
   (first (:content (first (filter (fn [t] (= tag (:tag t))) node)))))
 
+(def time-formatter
+  (time/formatter "dd/MM/YYYY hh:mm:ss aa"))
+
 (defn- create-event
   "Create an event from an event XML node"
   [node]
   (let [class (content-for-tag-named node :Event_Class)
         type (content-for-tag-named node :Event_Type)
-        updated (content-for-tag-named node :Last_Update)
+        updated (time/parse time-formatter (content-for-tag-named node :Last_Update))
         description (content-for-tag-named node :Event_Description)
         location [(Float/parseFloat (content-for-tag-named node :Lat))
                   (Float/parseFloat (content-for-tag-named node :Lon))]
         event-id (content-for-tag-named node :Event_ID)
-        create-time (content-for-tag-named node :CREATE_TIME)]
+        create-time (time/parse time-formatter (content-for-tag-named node :CREATE_TIME))]
     (->Event class type updated description location event-id create-time)))
 
 (defn load-events
