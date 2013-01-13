@@ -1,15 +1,23 @@
 # pa511
 
-I'm an app. Or maybe I'm a library? I haven't decided yet. 
-
-The choice is up to you!
+This is a Clojure library for retrieving and parsing the PA 511 data 
+as [provided by PennDOT](http://www.511pa.com/Traffic.aspx).
 
 ## Usage
 
-FIXME
+From `lein repl`...
+
+```
+user=> (use 'pa511.core)
+nil
+user=> (load-events)
+#'pa511.core/*events*
+user=> (:location (first (incidents)))
+[40.03062 -78.492905]
+```
 
 ## License
 
-Copyright © 2013 FIXME
+Copyright © 2013 Joshua Miller
 
-Distributed under the Eclipse Public License, the same as Clojure.
+Distributed under the MIT License
