@@ -1,6 +1,6 @@
 # pa511
 
-This is a Clojure library for retrieving and parsing the PA 511 data 
+This is a Clojure library for retrieving and parsing the PA 511 data
 as [provided by PennDOT](http://www.511pa.com/Traffic.aspx).
 
 ## Usage
@@ -13,7 +13,14 @@ nil
 user=> (load-events)
 #'pa511.core/*events*
 user=> (:location (first (incidents)))
-[40.03062 -78.492905]
+#pa511.geometry.Point{:latitude 40.03062, :longitude -78.492905}
+```
+Find some incidents within a radius in miles...
+```
+user=> (def hbg {:latitude 40.25 :longitude -76.75})
+#'user/hbg
+user=> (within hbg 15 (incidents))
+(#pa511.core.Event{:class "1", :type "travel advisory", :updated #<DateTime 2012-03-09T12:36:44.000Z>, :description "PA Turnpike: ...
 ```
 
 ## License
