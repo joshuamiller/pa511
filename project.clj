@@ -1,4 +1,4 @@
-(defproject pa511 "0.0.1-SNAPSHOT"
+(defproject pa511 "0.1.0-SNAPSHOT"
   :description "Interpreting PA 511 Data"
   :url "http://github.com/joshuamiller/pa511"
   :license {:name "MIT"
