@@ -11,7 +11,7 @@ From `lein repl`...
 user=> (use 'pa511.core)
 nil
 user=> (load-events)
-#'pa511.core/*events*
+true
 user=> (:location (first (incidents)))
 #pa511.geometry.Point{:latitude 40.03062, :longitude -78.492905}
 ```
