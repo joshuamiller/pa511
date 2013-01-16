@@ -17,7 +17,7 @@
   (first (:content (first (filter (fn [t] (= tag (:tag t))) node)))))
 
 (def time-formatter
-  (time/formatter "dd/MM/YYYY hh:mm:ss aa"))
+  (time/formatter "MM/dd/YYYY hh:mm:ss aa"))
 
 (defn- create-event
   "Create an event from an event XML node"
@@ -32,26 +32,28 @@
         create-time (time/parse time-formatter (content-for-tag-named node :CREATE_TIME))]
     (->Event class type updated description (->Point latitude longitude) event-id create-time)))
 
+(def events (atom []))
+
 (defn load-events
   "Load and interpret events"
   []
-  (let [events (map :content (:content (events-xml)))]
-    (def ^:dynamic *events* (map (fn [e] (create-event e)) events))))
+  (let [new-events (map :content (:content (events-xml)))]
+    (compare-and-set! events @events (map (fn [e] (create-event e)) new-events))))
 
 (defn incidents
   "All current incidents"
   []
-  (filter (fn [e] (= "1" (:class e))) *events*))
+  (filter (fn [e] (= "1" (:class e))) @events))
 
 (defn roadwork
   "All current road work"
   []
-  (filter (fn [e] (= "3" (:class e))) *events*))
+  (filter (fn [e] (= "3" (:class e))) @events))
 
 (defn special-events
   "All current special events"
   []
-  (filter (fn [e] (= "14" (:class e))) *events*))
+  (filter (fn [e] (= "14" (:class e))) @events))
 
 (defn within
   "Filter a collection of records with a location to find which are
