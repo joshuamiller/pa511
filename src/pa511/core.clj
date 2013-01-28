@@ -55,6 +55,11 @@
   []
   (filter (fn [e] (= "14" (:class e))) @events))
 
+(defn all-events
+  "All events"
+  []
+  @events)
+
 (defn within
   "Filter a collection of records with a location to find which are
    within a radius from a given point"
