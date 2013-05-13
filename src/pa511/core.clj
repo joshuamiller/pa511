@@ -19,17 +19,23 @@
 (def time-formatter
   (time/formatter "MM/dd/YYYY hh:mm:ss aa"))
 
+(defn- parse-time-if
+  [string]
+  (if string
+    (time/parse time-formatter string)
+    nil))
+
 (defn- create-event
   "Create an event from an event XML node"
   [node]
   (let [class (content-for-tag-named node :Event_Class)
         type (content-for-tag-named node :Event_Type)
-        updated (time/parse time-formatter (content-for-tag-named node :Last_Update))
+        updated (parse-time-if (content-for-tag-named node :Last_Update))
         description (content-for-tag-named node :Event_Description)
         latitude (Float/parseFloat (content-for-tag-named node :Lat))
         longitude (Float/parseFloat (content-for-tag-named node :Lon))
         event-id (content-for-tag-named node :Event_ID)
-        create-time (time/parse time-formatter (content-for-tag-named node :CREATE_TIME))]
+        create-time (parse-time-if (content-for-tag-named node :CREATE_TIME))]
     (->Event class type updated description (->Point latitude longitude) event-id create-time)))
 
 (def events (atom []))
