@@ -9,7 +9,7 @@
 (defn- events-xml
   "Get and parse incident XML"
   []
-  (xml/parse (java.io.StringReader. (:body (client/get "http://www.511pa.com/xml/createXML.aspx?createXMLFor=events&modeType=traffic&monthType=0&minX=-83.47412109375&maxX=-72.213134765625&minY=39.01918369029137&maxY=42.61779143282346")))))
+  (xml/parse (java.io.StringReader. (:body (client/get "http://www.511pa.com/xml/createXML.aspx?createXMLFor=events&modeType=traffic&monthType=0&minX=-83.47412109375&maxX=-72.213134765625&minY=39.01918369029137&maxY=42.61779143282346" {:headers {"User-Agent" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:20.0) Gecko/20100101 Firefox/20.0"}})))))
 
 (defn- content-for-tag-named
   "Pull content from tag in an XML node"
